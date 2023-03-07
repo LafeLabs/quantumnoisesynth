@@ -1,0 +1,36 @@
+{
+    "html": [
+        "README.md",
+        "fork.html",
+        "forkdestroyer.html",
+        "geometron.js",
+        "icon.html",
+        "index.html",
+        "readme.html",
+        "readmeeditor.html",
+        "trashmagic.css",
+        "trashmagic.html",
+        "trashmagic.js",
+        "webdestroyer.html",
+        "webeditor.html"
+    ],
+    "data": [
+        "currentjson.txt",
+        "dna.txt",
+        "trashotron-hypercube.txt"
+    ],
+    "php": [
+        "copy.txt",
+        "deletefile.txt",
+        "dir.txt",
+        "dnagenerator.txt",
+        "editor.txt",
+        "fileloader.txt",
+        "filesaver.txt",
+        "mkdir.txt",
+        "rdelete.txt",
+        "rdir.txt",
+        "replicator.txt",
+        "text2php.txt"
+    ]
+}
