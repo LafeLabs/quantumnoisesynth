@@ -11,4 +11,5 @@ Consider a quantum tunnel junction. An audio(20 Hz to 20 kHz) cosine signal of a
 ![](graphs/graph3.png)
 ![](graphs/graph4.png)
 ![](graphs/graph5.png)
+![](graphs/graph6.png)
 ![](schematics/schematic1.svg)
