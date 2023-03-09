@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.js"></script>
+</head>
+<body>
+    
+    <a href = "index.html">HOME</a>
+    <div id = "gobutton">CLICK TO RUN</div>
+<h1>QUANTUM NOISE SYNTH RAMP TONE GENERATOR</h1>
+<table>
+    <tr>
+        <td>TONE FREQUENCY:</td>
+        <td><input id = "freqinput"/></td>
+        <td>Hz</td>
+    </tr>
+    <tr>
+        <td>RAMP TIME:</td>
+        <td><input id = "ramptimeinput"/></td>
+        <td>ms</td>
+    </tr>
+
+</table>
+<style>
+    body{
+        background-color:#0000ff;
+        color:white;
+        font-family:courier;
+        font-size:2em;
+    }
+    a{
+        color:#ff2cb4;
+    }
+    #gobutton{
+        text-align:center;
+        border:solid;
+        border-color:white;
+        border-width:8px;
+        border-radius:15px;
+        width:10em;
+        cursor:pointer;
+    }
+</style>
+<script>
+
+ramptime = 1000; //ramp time in ms
+
+gain = 0.1;
+
+let osc, playing, freq, amp;
+
+osc = new p5.Oscillator('sine');
+
+  let startTime;
+  let maxAmplitude;
+  let sweepTime = 5; // in seconds
+  
+  
+function setup() {
+    startTime = millis();
+    maxAmplitude = 0.5; // set max amplitude to half of full volume
+    osc.amp(0);
+    osc.start();
+}
+
+function draw() {
+    let a = gain*(millis()%ramptime)/ramptime; //
+    osc.amp(a);
+}
+
+function playOscillator() {
+  // starting an oscillator on a user gesture will enable audio
+  // in browsers that have a strict autoplay policy.
+  // See also: userStartAudio();
+  osc.start();
+  playing = true;
+}
+
+ftone = 440;
+osc.freq(ftone);
+
+document.getElementById("freqinput").value = ftone.toString();
+document.getElementById("freqinput").onchange = function(){
+  ftone = this.value;
+  osc.freq(parseFloat(ftone));
+  osc.start();
+}
+document.getElementById("freqinput").onkeydown = function(){
+  osc.start();
+}
+
+document.getElementById("ramptimeinput").value = ramptime.toString();
+document.getElementById("ramptimeinput").onchange = function(){
+  osc.start();
+  ramptime = parseInt(this.value);
+}
+
+
+document.getElementById("gobutton").onclick = function(){
+    osc.start();
+}
+</script>
+
+</body>
+</html>

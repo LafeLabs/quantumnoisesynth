@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.js"></script>
+</head>
+<body>
+    <a href = "index.html">home</a>
+<table>
+    <tr>
+        <td>frequency:</td>
+        <td><input id = "freqinput"/></td>
+    </tr>
+</table>
+<script>
+
+
+let osc, playing, freq, amp;
+
+osc = new p5.Oscillator('sine');
+
+function setup() {
+}
+
+function draw() {
+
+}
+
+function playOscillator() {
+  // starting an oscillator on a user gesture will enable audio
+  // in browsers that have a strict autoplay policy.
+  // See also: userStartAudio();
+  osc.start();
+  playing = true;
+}
+
+
+
+ftone = 440;
+osc.freq(ftone);
+
+document.getElementById("freqinput").select();
+document.getElementById("freqinput").value = ftone.toString();
+document.getElementById("freqinput").onchange = function(){
+  ftone = this.value;
+  osc.freq(parseFloat(ftone));
+  osc.start();
+  playing = true;
+}
+
+
+</script>
+
+</body>
+</html>
