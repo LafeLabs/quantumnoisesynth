@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script>
+            MathJax.Hub.Config({
+                tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                processEscapes: true,
+                processClass: "mathjax",
+                ignoreClass: "no-mathjax"
+                }
+            });//			MathJax.Hub.Typeset();//tell Mathjax to update the math
+        </script>
+        
+  </head>
+  <body>
+<h1>$p = \frac{T}{2}\left[\left(\frac{v+f}{2T}\right)\coth{\left(\frac{v+f}{2T}\right)} + \left(\frac{v-f}{2T}\right)\coth{\left(\frac{v-f}{2T}\right)}\right]$</h1>
+<script>
+
+let G = 200;// gain in px per kelvin
+let T = 0.2;//temperature in kelvin
+let f = 0.25;// frequency in kelvin (hf/k_B)
+let margin = 0;//margin in px
+let vmax = 4.0;
+let x_ellipse = 0;
+let y_ellipse = 0;
+let v_ellipse = 0;
+let size_ellipse = 25;
+let omega = 2*3.14*0.5;// 2 PI frequency of animation motion
+let time = 0;
+let framespersecond = 30;
+let mic, fft;
+
+
+function setup() {
+  createCanvas(innerWidth/2, innerHeight/2);
+  strokeWeight(2);  
+  frameRate(30);
+  mic = new p5.AudioIn();
+  mic.start();
+  fft = new p5.FFT();
+  fft.setInput(mic);
+  
+}
+
+
+function draw() {
+   let spectrum = fft.analyze();
+
+  // Find the peak frequency bin
+  let peakBin = 0;
+  for (let i = 1; i < spectrum.length; i++) {
+    if (spectrum[i] > spectrum[peakBin]) {
+      peakBin = i;
+    }
+  }
+//console.log(peakBin);
+  // Calculate the peak frequency in Hz
+  let nyquistFreq = sampleRate() / 2;
+  let binFreq = nyquistFreq / (spectrum.length / 2);
+  let peakFreq = binFreq * peakBin;
+  f = 1.5*spectrum[100]/100;    
+  frameRate(30);
+  
+  T = pow(10,(2*mouseX/width)-2);
+//  f = pow(10,(2*mouseY/height)-2);
+  background(0);
+  translate(width/2, height - margin);
+  noFill();
+  // plot hyperbolic tangent functions
+  strokeWeight(8);
+    stroke(0, 255, 0);
+    beginShape();
+  for (let v = -vmax; v <= vmax; v += 0.01)  {
+      let p = -(0.5*T*(v+f)/(2*T))/Math.tanh((v+f)/(2*T)) -(0.5*T*(v-f)/(2*T))/Math.tanh((v-f)/(2*T));
+      vertex(v * G, 2*p * G);
+  }
+  endShape();
+  strokeWeight(2);    
+  fill("blue");
+  time = frameCount/30;
+  v_ellipse = 0.7*vmax*sin(omega*time); 
+  x_ellipse = G*v_ellipse;
+  y_ellipse = 2*G*(-(0.5*T*(v_ellipse+f)/(2*T))/Math.tanh((v_ellipse+f)/(2*T)) -(0.5*T*(v_ellipse-f)/(2*T))/Math.tanh((v_ellipse-f)/(2*T)));
+  ellipse(x_ellipse,y_ellipse,size_ellipse);
+  
+  for (let v = -vmax; v <= vmax; v += 0.25)  {
+     line(G*v,2*margin,G*v,-height);
+  }
+  for (let p = 0; p >= -height/G; p -= 0.25)  {
+     line(-0.5*width,p*G,0.5*width,p*G);
+  }
+
+
+}
+
+</script>
+<style>
+h1{
+    text-align:center;
+    color:#00ff00;
+}
+main{
+    position:absolute;
+    left:25%;
+    top:25%;
+    border:solid;
+    border-color:#00ff00;
+    border-width:5px;
+}
+body{
+    background-color:black;
+}
+H1{
+    color:#00ff00;
+    font-family:courier;
+}
+</style>  
+  </body>
+</html>

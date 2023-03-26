@@ -1,12 +1,14 @@
 {
     "html": [
         "README.md",
+        "fermi-sketch.html",
         "fork.html",
         "forkdestroyer.html",
         "geometron.js",
         "icon.html",
         "index.html",
         "p5soundexample.html",
+        "pvcurve-audio.html",
         "ramp.html",
         "readme.html",
         "readmeeditor.html",
